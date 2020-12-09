@@ -268,6 +268,7 @@ class MainApplication(tk.Frame):
 
         self.enter_name_label.place(relx=0.2, rely=0.4, anchor="center")
         self.name_entry.place(relx=0.6, rely=0.4, anchor="center")
+        self.name_entry.delete(0, "end")
         self.create_profile_button.place(relx=0.5, rely=0.6, anchor="center")
         self.new_game_back_button.place(relx=0.02, rely=0.98, anchor="sw")
 
