@@ -179,7 +179,7 @@ class MainApplication(tk.Frame):
             self.change_settings_buttons.append(
                 tk.Button(self.mainframe, text="Change", bd=2, font=("Arial", 16),
                           cursor="hand2",
-                          fg="white", bg="black", command=lambda i=i: self.change_setting(i, name)))
+                          fg="white", bg="black", command=lambda i = i: self.change_setting(i)))
 
     def settings_elements(self):
         self.settings_label = tk.Label(
@@ -189,9 +189,10 @@ class MainApplication(tk.Frame):
         self.save_settings_button = tk.Button(self.mainframe, text="Save Settings", bd=0, font=("Arial", 24),
                                                fg="white", bg="black", cursor="hand2", command=self.pre_save_settings)
 
-    def change_setting(self, i, name):
+    def change_setting(self, i):
+        print(i)
         self.potential_change_index = i
-        self.potential_change_name = name
+        self.potential_change_name = list(self.settings['keymap'].keys())[i]
         self.enter_keymap_notification.place(relx=0.5, rely=0.8, anchor="center")
         self.mainframe.bind("<Key>", self.assign_new_keymap)
 

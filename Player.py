@@ -42,16 +42,22 @@ class Player(Entity):
         self.center_x, self.center_y = 500, 500
         self.vel_x, self.vel_y = 0, 0
 
-    def rotate(self, event=0):
+    def rotate_left(self, event):
+        self.rotate("left")
+
+    def rotate_right(self, event):
+        self.rotate("right")
+
+    def rotate(self, direction=None):
         if self.alive:
             angle = 0
-            if event != 0:
-                angle_val = pi*0.1
-                if event.keycode == 37:
+            angle_val = pi*0.1
+            if direction is not None:
+                if direction == "left":
                     angle = - angle_val
-                elif event.keycode == 39:
+                elif direction == "right":
                     angle = angle_val
-            self.orientation += angle
+                self.orientation += angle
 
             # Rotation points
             for i in range(0, len(self.points), 2):

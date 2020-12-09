@@ -55,9 +55,11 @@ class Match:
         # Key Bindings
         self.mainframe.bind("<Escape>", self.esc_menu)  # Unchangeable
 
+        for setting in self.app.settings['keymap']:
+            self.mainframe.unbind("<" + self.app.settings['keymap'][setting] + ">")
         self.mainframe.bind("<" + self.app.settings['keymap']['Thruster'] + ">", self.player.boost)
-        self.mainframe.bind("<" + self.app.settings['keymap']['Turn Left'] + ">", self.player.rotate)
-        self.mainframe.bind("<" + self.app.settings['keymap']['Turn Right'] + ">", self.player.rotate)
+        self.mainframe.bind("<" + self.app.settings['keymap']['Turn Left'] + ">", self.player.rotate_left)
+        self.mainframe.bind("<" + self.app.settings['keymap']['Turn Right'] + ">", self.player.rotate_right)
         self.mainframe.bind("<" + self.app.settings['keymap']['Jump'] + ">", self.player.jump)
         self.mainframe.bind("<" + self.app.settings['keymap']['Shoot'] + ">", self.player.shoot)
         self.mainframe.bind("<" + self.app.settings['keymap']['Boss Key'] + ">", self.boss_key)
