@@ -39,6 +39,7 @@ class MainApplication(tk.Frame):
         # Load settings
         self.new_map = None
         self.settings = self.load_settings()
+        self.temp_settings = self.settings.copy()
 
         # Creating elememts
         self.main_menu_elements()
@@ -190,30 +191,29 @@ class MainApplication(tk.Frame):
                                                fg="white", bg="black", cursor="hand2", command=self.pre_save_settings)
 
     def change_setting(self, i):
-        print(i)
         self.potential_change_index = i
         self.potential_change_name = list(self.settings['keymap'].keys())[i]
         self.enter_keymap_notification.place(relx=0.5, rely=0.8, anchor="center")
         self.mainframe.bind("<Key>", self.assign_new_keymap)
 
     def pre_save_settings(self):
-        if self.new_map is not None:
-            self.settings['keymap'][self.potential_change_name] = self.new_map
-            for element in self.change_settings_mappings:
-                element.config(fg="white")
-                self.new_map = None
-            self.save_settings()
+        self.settings = self.temp_settings.copy()
+        for element in self.change_settings_mappings:
+            element.config(fg="white")
+        self.save_settings()
 
     def assign_new_keymap(self, event):
-        self.new_map = event.keysym
+        self.temp_settings['keymap'][self.potential_change_name] = event.keysym
         self.mainframe.unbind("<Key>")
-        self.change_settings_mappings[self.potential_change_index].config(text=self.new_map, fg="green")
+        self.change_settings_mappings[self.potential_change_index].config(
+            text=self.temp_settings['keymap'][self.potential_change_name], fg="green")
         self.enter_keymap_notification.place_forget()
 
     def settings_screen(self):
         self.clear_screen()
 
         self.settings_label.place(relx=0.5, rely=0.2, anchor="center")
+        self.temp_settings = self.settings.copy()
 
         self.load_into_settings_labels()
         for i in range(len(self.change_settings_labels)):
